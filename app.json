@@ -1,0 +1,36 @@
+import React, { useEffect } from 'react';
+import { Alert, View, Text } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+
+const App = () => {
+  useEffect(() => {
+    // Request permission
+    messaging()
+      .requestPermission()
+      .then(authStatus => {
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        if (enabled) {
+          console.log('Authorization status:', authStatus);
+        }
+      });
+
+    // Foreground message listener
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('New FCM Message!', JSON.stringify(remoteMessage.notification));
+    });
+
+    return unsubscribe;
+  }, []);
+
+  return (
+    <View>
+      <Text style={{ marginTop: 100, textAlign: 'center' }}>
+        📲 Firebase Push Notification Ready!
+      </Text>
+    </View>
+  );
+};
+
+export default App;

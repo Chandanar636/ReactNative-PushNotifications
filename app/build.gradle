@@ -1,0 +1,27 @@
+apply plugin: "com.android.application"
+apply plugin: "com.google.gms.google-services"
+
+android {
+    namespace "com.notificationapp"
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.notificationapp"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+}
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"
+    implementation 'com.google.firebase:firebase-messaging:23.4.0'
+}
